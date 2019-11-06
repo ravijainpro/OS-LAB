@@ -1,3 +1,8 @@
+/*
+https://www.chegg.com/homework-help/questions-and-answers/implement-multi-threaded-producer-consumer-problem-pthreads-library-c-producer-consumer-co-q8539965
+The above link have got the same code with explanation (via comments)
+*/
+
 # include <stdio.h>
 # include <pthread.h>
 # define BufferSize 10
