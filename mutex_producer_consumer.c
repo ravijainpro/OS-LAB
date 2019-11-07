@@ -22,20 +22,21 @@ void *Consumer();
 int BufferIndex=0;
 char *BUFFER;
 
-pthread_cond_t Buffer_Not_Full=PTHREAD_COND_INITIALIZER;
-pthread_cond_t Buffer_Not_Empty=PTHREAD_COND_INITIALIZER;
-pthread_mutex_t mVar=PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t Buffer_Not_Full=PTHREAD_COND_INITIALIZER; //initialize a condition 
+pthread_cond_t Buffer_Not_Empty=PTHREAD_COND_INITIALIZER; //initialize a condition 
+pthread_mutex_t mVar=PTHREAD_MUTEX_INITIALIZER;  ..//initialize a mutex
 
 int main()
 {    
-    pthread_t ptid,ctid;
+    pthread_t ptid,ctid; //one thread each for producer and one for consumer
     
-    BUFFER=(char *) malloc(sizeof(char) * BufferSize);            
+    BUFFER=(char *) malloc(sizeof(char) * BufferSize);            //a buffer
     
-    pthread_create(&ptid,NULL,Producer,NULL);
-    pthread_create(&ctid,NULL,Consumer,NULL);
+    pthread_create(&ptid,NULL,Producer,NULL); //create thread for producer
+    pthread_create(&ctid,NULL,Consumer,NULL); //create thread for consumer
     
-    pthread_join(ptid,NULL);
+    //join => signal them to run
+    pthread_join(ptid,NULL); 
     pthread_join(ctid,NULL);
         
     
@@ -46,14 +47,14 @@ void *Producer()
 {    
     for(int i=1; i<=MAX; i++)
     {
-        pthread_mutex_lock(&mVar);
-        if(BufferIndex==BufferSize)
+        pthread_mutex_lock(&mVar); //thread got the control, so lock the mutex, now this thread got the mutex lock.
+        if(BufferIndex==BufferSize) // if buffer is full
         {                        
-            pthread_cond_wait(&Buffer_Not_Full,&mVar);
+            pthread_cond_wait(&Buffer_Not_Full,&mVar); //thsi func puts this thread in waiting condition, unlocks the mutex and signals other waiting threads to execute.
         }                        
-        BUFFER[BufferIndex++]='@';
+        BUFFER[BufferIndex++]='@';  //if all good, insert into buffer
         printf("Produce : %d \n",BufferIndex);
-        pthread_mutex_unlock(&mVar);
+        pthread_mutex_unlock(&mVar); //at the end of usage unlock the mutex for other threads
         pthread_cond_signal(&Buffer_Not_Empty);   //optional      
     }    
     
