@@ -13,7 +13,7 @@ In this case, atomically means with respect to the mutex and the condition varia
 
 # include <stdio.h>
 # include <pthread.h>
-# define BufferSize 10
+# define BufferSize 10 //play with this size var; keep it 10 and 5 respectively to get a better understanding.
 # define MAX 10
 
 void *Producer();
@@ -24,7 +24,7 @@ char *BUFFER;
 
 pthread_cond_t Buffer_Not_Full=PTHREAD_COND_INITIALIZER; //initialize a condition 
 pthread_cond_t Buffer_Not_Empty=PTHREAD_COND_INITIALIZER; //initialize a condition 
-pthread_mutex_t mVar=PTHREAD_MUTEX_INITIALIZER;  ..//initialize a mutex
+pthread_mutex_t mVar=PTHREAD_MUTEX_INITIALIZER;  //initialize a mutex
 
 int main()
 {    
