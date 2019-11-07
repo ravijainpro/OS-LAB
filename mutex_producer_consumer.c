@@ -54,7 +54,7 @@ void *Producer()
         BUFFER[BufferIndex++]='@';
         printf("Produce : %d \n",BufferIndex);
         pthread_mutex_unlock(&mVar);
-        pthread_cond_signal(&Buffer_Not_Empty);        
+        pthread_cond_signal(&Buffer_Not_Empty);   //optional      
     }    
     
 }
@@ -70,6 +70,6 @@ void *Consumer()
         }                
         printf("Consume : %d \n",BufferIndex--);        
         pthread_mutex_unlock(&mVar);        
-        pthread_cond_signal(&Buffer_Not_Full);                
+        pthread_cond_signal(&Buffer_Not_Full);       //optional         
     }    
 }
