@@ -1,6 +1,14 @@
 /*
 https://www.chegg.com/homework-help/questions-and-answers/implement-multi-threaded-producer-consumer-problem-pthreads-library-c-producer-consumer-co-q8539965
 The above link have got the same code with explanation (via comments)
+
+
+
+The pthread_cond_wait() function blocks the calling thread, waiting for the condition specified by cond to be signaled or broadcast to.
+
+When pthread_cond_wait() is called, the calling thread must have mutex locked. 
+The pthread_cond_wait() function atomically unlocks mutex and performs the wait for the condition. 
+In this case, atomically means with respect to the mutex and the condition variable and another threads access to those objects through the pthread condition variable interfaces.
 */
 
 # include <stdio.h>
