@@ -16,6 +16,7 @@ int main()
 
 	// ftok to generate unique key 
 	key = ftok("progfile", 65); 
+	// ftok() , which converts a filename to a key value that is unique within the system. Functions that initialize or get access to messages
 
 	// msgget creates a message queue 
 	// and returns identifier 
