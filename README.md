@@ -16,3 +16,6 @@
 * Signals - sigalarm, sigint,
 * Barber problem
 * Consumer producer problem
+* Reader Writer Problem 
+* Dining Philosopher Probelm
+* IPC for Producer consumer probelm in IPC folder
