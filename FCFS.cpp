@@ -12,7 +12,7 @@ int main() {
     cout << "Enter number of Process\n";
     cin >> n;
     for(i=0; i<n; i++) {
-        cout << "Enter the process name, AT & BT for " << i+1 << "th process\n";
+        cout << "Enter the process name, AT & BT for " << i+1 << "th process\n"; //(i+1)th process arrival time is greater than (i)th process arrival time
         cin >> P[i].pname;
         cin >> P[i].at;
         cin >> P[i].bt;
