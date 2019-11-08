@@ -50,12 +50,12 @@ void *Producer()
         pthread_mutex_lock(&mVar); //thread got the control, so lock the mutex, now this thread got the mutex lock.
         if(BufferIndex==BufferSize) // if buffer is full
         {                        
-            pthread_cond_wait(&Buffer_Not_Full,&mVar); //thsi func puts this thread in waiting condition, unlocks the mutex and signals other waiting threads to execute.
+            pthread_cond_wait(&Buffer_Not_Full,&mVar); //this func puts the producer in waiting state on BUFFER_NOT_FULL, it also unlocks the mutex and signals other waiting threads to execute.
         }                        
         BUFFER[BufferIndex++]='@';  //if all good, insert into buffer
         printf("Produce : %d \n",BufferIndex);
         pthread_mutex_unlock(&mVar); //at the end of usage unlock the mutex for other threads
-        pthread_cond_signal(&Buffer_Not_Empty);   //optional      
+        pthread_cond_signal(&Buffer_Not_Empty);    //signals all the process waiting on BUFFER_NOT_EMPTY to execute.
     }    
     
 }
@@ -71,6 +71,6 @@ void *Consumer()
         }                
         printf("Consume : %d \n",BufferIndex--);        
         pthread_mutex_unlock(&mVar);        
-        pthread_cond_signal(&Buffer_Not_Full);       //optional         
+        pthread_cond_signal(&Buffer_Not_Full);             
     }    
 }
