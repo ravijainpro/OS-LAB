@@ -1,5 +1,3 @@
-//ONE BUG THERE....AND THIS IS NOT EFFICENT ONE!!!...if heap was used it would have been efficient..
-
 #include <iostream>
 #define SIZE 10
 using namespace std;
@@ -51,7 +49,7 @@ void simulation() {
         int check=0;
         for(i=0; i<n; i++) { 
             //skip those process which are completed or whcih haven't yet arrived
-            if(!P[order[0][1]].bt_cpy || P[order[0][i]].at>temp) {
+            if(!P[order[0][i]].bt_cpy || P[order[0][i]].at>temp) {
                 continue;
             }
             P[order[0][i]].bt_cpy-=1;
