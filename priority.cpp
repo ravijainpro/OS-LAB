@@ -46,15 +46,23 @@ void sort() {
 void simulation() {
     int full=n;
     while(full) {
-        int check=0;
+        //current_time==temp
+        //check: Used to check whether at least one process done in the entire for loop..if not done this imples all process has at < current_time
+        //so we got to increment current_time i.e., temo...else it will end up in infinite loop
+        //t: t is used to remove rr type behaviour...but to preserve preemptive nature for checking the at and priorities  
+        int check=0,t=0;   
         for(i=0; i<n; i++) { 
             //skip those process which are completed or whcih haven't yet arrived
-            if(!P[order[0][i]].bt_cpy || P[order[0][i]].at>temp) {
+            if(t || !P[order[0][i]].bt_cpy || P[order[0][i]].at>temp) {
                 continue;
             }
             P[order[0][i]].bt_cpy-=1;
+            if(P[order[0][i]].bt_cpy) {
+                t=1;
+            }
             //if process done.. => complete the req attributes 
             if(!P[order[0][i]].bt_cpy) {
+                t=0;
                 check++;
                 P[order[0][i]].ft=temp; // FT done
                 P[order[0][i]].tat=P[order[0][i]].ft-P[order[0][i]].at; // TAT=FT-AT done
