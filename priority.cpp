@@ -1,3 +1,4 @@
+//This is not the effiecent solution....the efficient solution uses the heap DS... STL !!! :-/
 #include <iostream>
 #define SIZE 10
 using namespace std;
