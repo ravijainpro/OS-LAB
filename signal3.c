@@ -9,7 +9,7 @@ void handler_3(int signum){
     signal(SIGINT, SIG_DFL);
     //ignore SIGSTOP ?
     if( signal(SIGKILL, SIG_IGN) == SIG_ERR){
-        perror("signal");;
+        perror("signal");
         exit(1);
     }
 
