@@ -58,13 +58,13 @@ void simulation() {
                 continue;
             }
             P[order[0][i]].bt_cpy-=1;
+            check++;
             if(P[order[0][i]].bt_cpy) {
                 t=1;
             }
             //if process done.. => complete the req attributes 
             if(!P[order[0][i]].bt_cpy) {
                 t=0;
-                check++;
                 P[order[0][i]].ft=temp; // FT done
                 P[order[0][i]].tat=P[order[0][i]].ft-P[order[0][i]].at; // TAT=FT-AT done
                 P[order[0][i]].wt=P[order[0][i]].tat-P[order[0][i]].bt; // WT=TAT-BT done
