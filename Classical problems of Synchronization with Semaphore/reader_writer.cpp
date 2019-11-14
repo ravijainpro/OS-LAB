@@ -1,56 +1,48 @@
 //using c:
-//using c:
-#include<stdio.h>
-#include<pthread.h>
-#include<semaphore.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <semaphore.h>
+#include <unistd.h>
 
-sem_t mutex; //for handeling both reader and writer count values ...
-sem_t db; //for wrtiter lock/unlock to db
-int readercount=0;
 pthread_t reader1,reader2,writer1,writer2;
-void *reader(void *);
-void *writer(void *);
-main()
-{
-sem_init(&mutex,0,1);
-sem_init(&db,0,1);
-pthread_create(&reader1,NULL,reader,"1");
-pthread_create(&reader2,NULL,reader,"2");
-pthread_create(&writer1,NULL,writer,"1");
-pthread_create(&writer2,NULL,writer,"2");
-pthread_join(reader1,NULL);
-pthread_join(writer1,NULL);
-pthread_join(reader2,NULL);
-pthread_join(writer2,NULL);
-}
-void *reader(void *p)
-{
-printf("prevoius value %d\n",mutex);
-sem_wait(&mutex);
-printf("Mutex acquired by reader %d\n",mutex);
-readercount++;
-if(readercount==1) sem_wait(&db);
-sem_post(&mutex);
-printf("Mutex returned by reader %d\n",mutex);
-printf("Reader %s is Readingn\n",p);
-sleep(3);
-sem_wait(&mutex);
-printf("Reader %s Completed Reading\n",p);
-readercount--;
-if(readercount==0) sem_post(&db);
-sem_post(&mutex);
+sem_t db, mutex, writer_writing;
+//mutex--> used for changing the value of readercount
+int readercount=0;
+
+void *reader(void *p) {
+    printf("Reader %s is waiting\n ",p);
+    sem_wait(&mutex);
+    readercount++;
+    if(readercount==1) {sem_wait(&db);}
+    sem_post(&mutex);
+    printf("Reader %s is reading\n",p);
+    sleep(3); //reading
+    sem_wait(&mutex);
+    readercount--;
+    if(readercount==0) {sem_post(&db);}
+    printf("Reader %s finished reading\n",p);
+    sem_post(&mutex);
 }
 
-void *writer(void *p)
-{
-printf("Writer %s is waiting\n ",p);
-sem_wait(&db);
-printf("Writer %s is writing\n ",p);
-sem_post(&db);
-printf("Writer %s completed writing\n ",p);
-sleep(2);
+void *writer(void *p) {
+    printf("Writer %s is waiting\n ",p);
+    sem_wait(&db);
+    printf("Writer %s is writing\n",p);
+    sleep(3); //writing
+    sem_post(&db);
 }
-
+ void main() {
+    sem_init(&db,0,1);
+    sem_init(&mutex,0,1);
+    pthread_create(&reader1,NULL,reader,"1");
+    pthread_create(&writer1,NULL,writer,"1");
+    pthread_create(&reader2,NULL,reader,"2");
+    pthread_create(&writer2,NULL,writer,"2");
+    pthread_join(reader1,NULL);
+    pthread_join(writer1,NULL);
+    pthread_join(reader2,NULL);
+    pthread_join(writer2,NULL);
+ }
 /*
 
 //////=========================================OLD ONE=================================================
