@@ -1,4 +1,5 @@
 //using c:
+//using c:
 #include<stdio.h>
 #include<pthread.h>
 #include<semaphore.h>
@@ -13,13 +14,14 @@ main()
 {
 sem_init(&mutex,0,1);
 sem_init(&db,0,1);
-while(1)
-{
 pthread_create(&reader1,NULL,reader,"1");
 pthread_create(&reader2,NULL,reader,"2");
 pthread_create(&writer1,NULL,writer,"1");
 pthread_create(&writer2,NULL,writer,"2");
-}
+pthread_join(reader1,NULL);
+pthread_join(writer1,NULL);
+pthread_join(reader2,NULL);
+pthread_join(writer2,NULL);
 }
 void *reader(void *p)
 {
@@ -31,7 +33,7 @@ if(readercount==1) sem_wait(&db);
 sem_post(&mutex);
 printf("Mutex returned by reader %d\n",mutex);
 printf("Reader %s is Readingn\n",p);
-//sleep(3);
+sleep(3);
 sem_wait(&mutex);
 printf("Reader %s Completed Reading\n",p);
 readercount--;
@@ -41,11 +43,12 @@ sem_post(&mutex);
 
 void *writer(void *p)
 {
-printf("Writer is Waiting \n");
+printf("Writer %s is waiting\n ",p);
 sem_wait(&db);
 printf("Writer %s is writing\n ",p);
 sem_post(&db);
-//sleep(2);
+printf("Writer %s completed writing\n ",p);
+sleep(2);
 }
 
 /*
