@@ -25,9 +25,9 @@ void take_input() {
 }
 
 void sort() {
-    for(i=n-1; i > 0; i--) {
+    for(i=0; i < n-1; i++) {
         int t1=i;
-        for(int j=i-1; j>=0; j--) {
+        for(int j=i+1; j<n; j++) {
             if(order[1][j] < order[1][t1]) {
                 t1=j;
             }
@@ -53,11 +53,12 @@ void simulation() {
         //t: t is used to remove rr type behaviour...but to preserve preemptive nature for checking the at and priorities  
         int check=0,t=0;   
         for(i=0; i<n; i++) { 
-            //skip those process which are completed or whcih haven't yet arrived
+            //skip those process which are completed or whcih haven't arrived yet
             if(t || !P[order[0][i]].bt_cpy || P[order[0][i]].at>temp) {
                 continue;
             }
             P[order[0][i]].bt_cpy-=1;
+            cout << "process " << order[0][i] << " -1" << "current_time " << temp << "\n";
             check++;
             if(P[order[0][i]].bt_cpy) {
                 t=1;
@@ -65,7 +66,7 @@ void simulation() {
             //if process done.. => complete the req attributes 
             if(!P[order[0][i]].bt_cpy) {
                 t=0;
-                P[order[0][i]].ft=temp; // FT done
+                P[order[0][i]].ft=temp+1; // FT done
                 P[order[0][i]].tat=P[order[0][i]].ft-P[order[0][i]].at; // TAT=FT-AT done
                 P[order[0][i]].wt=P[order[0][i]].tat-P[order[0][i]].bt; // WT=TAT-BT done
                 full--; //one down!
