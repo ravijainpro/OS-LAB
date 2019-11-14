@@ -3,7 +3,7 @@ using namespace std;
  
 struct rr{
     char pname[20];
-    int at, bt, bt_cpy, wait, tat;
+    int at,ft, bt, bt_cpy, wait, tat;
 }p[10];
  
 int main() {
@@ -37,7 +37,9 @@ int main() {
             if(!p[i].bt) {
                 check++;
                 full-=1;
-                p[i].tat=total_time;
+                p[i].ft=total_time;
+                p[i].tat=p[i].ft-p[i].at;
+                p[i].wait=p[i].tat-p[i].bt_cpy;
             }
         }
         if(!check) {
@@ -46,7 +48,6 @@ int main() {
         cout << "\nEND: Current time: " << total_time << "\n";
     }
     for(i=0; i<n; i++) {
-        p[i].wait=p[i].tat-p[i].bt_cpy;
         cout << "Process: " << p[i].pname << " AT:" <<  p[i].at << " BT:"<< p[i].bt_cpy << " WT:" << p[i].wait << " TAT:" << p[i].tat << "\n";
         avg_time+=p[i].wait;
     }
